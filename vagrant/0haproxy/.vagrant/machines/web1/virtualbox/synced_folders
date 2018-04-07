@@ -1,1 +1,0 @@
-{"virtualbox":{"/var/www/html":{"guestpath":"/var/www/html","hostpath":"/home/invitado/practica-vagrant/vagrant/0haproxy/html1","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/home/invitado/practica-vagrant/vagrant/0haproxy","disabled":false,"__vagrantfile":true}}}
