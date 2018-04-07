@@ -1,0 +1,25 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.define "web1" do |web1|
+    web1.vm.box = "ubuntu/xenial32"
+    web1.vm.provider :virtualbox do |vb|
+      vb.customize [ 'modifyvm', :id, '--name', 'servidorweb1', "--memory", "512","--cpus","1" ]
+    end
+    # web1.vm.network "forwarded_port", guest: 80, host: 8008
+    web1.vm.network "private_network", ip: "192.168.33.10"
+    web1.vm.provision "shell", path: "script.sh"
+    web1.vm.synced_folder "html1", "/var/www/html"
+  end
+  config.vm.define "web2" do |web2|
+    web2.vm.box = "ubuntu/xenial32"
+    web2.vm.provider :virtualbox do |vb|
+      vb.customize [ 'modifyvm', :id, '--name', 'servidorweb2', "--memory", "512","--cpus","1" ]
+    end
+    # web.vm.network "forwarded_port", guest: 80, host: 8008
+    web2.vm.network "private_network", ip: "192.168.33.11"
+    web2.vm.provision "shell", path: "script.sh"
+    web2.vm.synced_folder "html2", "/var/www/html"
+ end
+end
