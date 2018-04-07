@@ -5,21 +5,41 @@ Vagrant.configure("2") do |config|
   config.vm.define "web1" do |web1|
     web1.vm.box = "ubuntu/xenial32"
     web1.vm.provider :virtualbox do |vb|
-      vb.customize [ 'modifyvm', :id, '--name', 'servidorweb1', "--memory", "512","--cpus","1" ]
+      vb.customize [ 'modifyvm', :id, '--name', 'nodo1', "--memory", "256","--cpus","1","--cpuexecutioncap","60" ]
     end
     # web1.vm.network "forwarded_port", guest: 80, host: 8008
-    web1.vm.network "private_network", ip: "192.168.33.10"
+    web1.vm.network "private_network", ip: "10.11.12.4"
     web1.vm.provision "shell", path: "script.sh"
     web1.vm.synced_folder "html1", "/var/www/html"
   end
   config.vm.define "web2" do |web2|
     web2.vm.box = "ubuntu/xenial32"
     web2.vm.provider :virtualbox do |vb|
-      vb.customize [ 'modifyvm', :id, '--name', 'servidorweb2', "--memory", "512","--cpus","1" ]
+      vb.customize [ 'modifyvm', :id, '--name', 'nodo2', "--memory", "256","--cpus","1","--cpuexecutioncap","60" ]
     end
     # web.vm.network "forwarded_port", guest: 80, host: 8008
-    web2.vm.network "private_network", ip: "192.168.33.11"
+    web2.vm.network "private_network", ip: "10.11.12.5"
     web2.vm.provision "shell", path: "script.sh"
     web2.vm.synced_folder "html2", "/var/www/html"
+ end
+  config.vm.define "web3" do |web3|
+    web3.vm.box = "ubuntu/xenial32"
+    web3.vm.provider :virtualbox do |vb|
+      vb.customize [ 'modifyvm', :id, '--name', 'nodo3', "--memory", "256","--cpus","1","--cpuexecutioncap","60" ]
+    end
+    # web.vm.network "forwarded_port", guest: 80, host: 8008
+    web3.vm.network "private_network", ip: "10.11.12.6"
+    web3.vm.provision "shell", path: "script.sh"
+    web3.vm.synced_folder "html3", "/var/www/html"
+ end
+  config.vm.define "hap" do |hap|
+    hap.vm.box = "ubuntu/xenial32"
+    hap.vm.provider :virtualbox do |vb|
+      vb.customize [ 'modifyvm', :id, '--name', 'master', "--memory", "384","--cpus","2","--cpuexecutioncap","60" ]
+    end
+    # web.vm.network "forwarded_port", guest: 80, host: 8008
+    hap.vm.network "private_network", ip: "10.11.12.3"
+    hap.vm.provision "shell", path: "script_hap.sh"
+    hap.vm.synced_folder "haproxy", "/etc/haproxy"
  end
 end
